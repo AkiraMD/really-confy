@@ -71,7 +71,7 @@ class ReallyConfy
 
   def load
     existing_config_files =
-      config_files.select{|file| File.exists? full_path_to_config_file(file) }
+      config_files.select{|file| File.exist? full_path_to_config_file(file) }
 
     print_info "Loading config from #{existing_config_files.inspect} for #{env.inspect}"+
       " environment..."
@@ -125,7 +125,7 @@ class ReallyConfy
   def load_config_file(file)
     full_path = full_path_to_config_file(file)
 
-    if File.exists? full_path
+    if File.exist? full_path
       multi_env_config = (ReallyConfy::Config.load full_path)
     else
       multi_env_config = empty_config
@@ -166,7 +166,7 @@ class ReallyConfy
   def ensure_required_config_files_exist
     required_config_files.each do |file|
       full_path = full_path_to_config_file(file)
-      unless File.exists? full_path
+      unless File.exist? full_path
         fail ConfigError, "Required config file #{file.inspect} does not exist under"+
           " #{full_path.inspect}!"
       end
@@ -176,7 +176,7 @@ class ReallyConfy
   def check_suggested_config_files_exist
     (suggested_config_files - required_config_files).each do |file|
       full_path = full_path_to_config_file(file)
-      unless File.exists? full_path
+      unless File.exist? full_path
         print_warning "WARNING: Config file #{file.inspect} does not exist!"
       end
     end
@@ -205,7 +205,7 @@ class ReallyConfy
   end
 
   def we_are_in_a_git_repo?
-    File.exists? '.git'
+    File.exist? '.git'
   end
 
   def file_is_in_git?(file)
